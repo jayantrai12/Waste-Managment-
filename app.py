@@ -1,76 +1,163 @@
+import streamlit as st
+import streamlit.components.v1 as components
 
+st.set_page_config(
+    page_title="WasteWise ♻️",
+    page_icon="♻️",
+    layout="centered",
+    initial_sidebar_state="collapsed",
+)
+
+# Remove default Streamlit padding & chrome
+st.markdown("""
+<style>
+    #MainMenu, header, footer { visibility: hidden; }
+    .block-container { padding: 0 !important; max-width: 100% !important; }
+    [data-testid="stAppViewContainer"] { padding: 0; }
+</style>
+""", unsafe_allow_html=True)
+
+HTML = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-.ww-header{padding:16px 16px 12px;border-bottom:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;gap:12px}
-.ww-logo{width:48px;height:48px;border-radius:50%;background:#EAF3DE;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
-.ww-title{font-size:20px;font-weight:500;color:var(--color-text-primary);line-height:1.2}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+     background:#f9fafb;color:#1a1a1a;}
+
+/* ── CSS variables ── */
+:root{
+  --color-text-primary:#1a1a1a;
+  --color-text-secondary:#6b7280;
+  --color-text-tertiary:#9ca3af;
+  --color-background-primary:#ffffff;
+  --color-background-secondary:#f3f4f6;
+  --color-border-tertiary:#e5e7eb;
+  --color-border-secondary:#d1d5db;
+  --border-radius-lg:12px;
+  --border-radius-md:8px;
+}
+
+/* ── wrapper ── */
+.app{max-width:520px;margin:0 auto;background:#fff;
+     min-height:100vh;border-left:1px solid #e5e7eb;border-right:1px solid #e5e7eb;}
+
+/* ── header ── */
+.ww-header{padding:16px 16px 12px;border-bottom:.5px solid var(--color-border-tertiary);
+            display:flex;align-items:center;gap:12px;position:sticky;top:0;
+            background:#fff;z-index:10;}
+.ww-logo{width:48px;height:48px;border-radius:50%;background:#EAF3DE;
+          display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.ww-title{font-size:20px;font-weight:600;color:var(--color-text-primary);line-height:1.2}
 .ww-sub{font-size:13px;color:var(--color-text-secondary);margin-top:2px}
+
+/* ── search ── */
 .search-section{padding:12px 16px}
-.search-box{display:flex;align-items:center;gap:10px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:10px 14px}
+.search-box{display:flex;align-items:center;gap:10px;
+            background:var(--color-background-secondary);
+            border:.5px solid var(--color-border-secondary);
+            border-radius:var(--border-radius-lg);padding:10px 14px}
 .search-box i{font-size:20px;color:var(--color-text-tertiary);flex-shrink:0}
-.search-box input{border:none;background:transparent;font-size:16px;color:var(--color-text-primary);flex:1;outline:none}
+.search-box input{border:none;background:transparent;font-size:16px;
+                  color:var(--color-text-primary);flex:1;outline:none}
 .search-box input::placeholder{color:var(--color-text-tertiary)}
+
+/* ── category grid ── */
 .cat-section{padding:0 16px 12px}
-.cat-label{font-size:11px;color:var(--color-text-tertiary);font-weight:500;letter-spacing:.05em;margin-bottom:8px}
+.cat-label{font-size:11px;color:var(--color-text-tertiary);font-weight:600;
+           letter-spacing:.06em;margin-bottom:8px}
 .cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.cat-btn{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);background:var(--color-background-primary);padding:10px 6px;cursor:pointer;text-align:center;transition:border-color .15s}
+.cat-btn{border:.5px solid var(--color-border-tertiary);
+         border-radius:var(--border-radius-lg);background:#fff;
+         padding:10px 6px;cursor:pointer;text-align:center;transition:all .15s}
 .cat-btn.active{border-width:2px}
 .cat-icon{font-size:26px;display:block;margin-bottom:4px}
-.cat-name{font-size:12px;font-weight:500;line-height:1.3}
-.cat-hindi{font-size:11px;margin-top:1px}
+.cat-name{font-size:12px;font-weight:600;line-height:1.3;color:var(--color-text-primary)}
+.cat-hindi{font-size:11px;color:var(--color-text-secondary);margin-top:1px}
+
+/* ── sub grid ── */
 .sub-section{padding:0 16px 12px}
 .sub-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:8px}
-.sub-btn{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);background:var(--color-background-primary);padding:8px 4px;cursor:pointer;text-align:center;transition:all .15s}
+.sub-btn{border:.5px solid var(--color-border-tertiary);
+         border-radius:var(--border-radius-md);background:#fff;
+         padding:8px 4px;cursor:pointer;text-align:center;transition:all .15s}
 .sub-btn.active{border-width:2px}
 .sub-icon{font-size:22px;display:block;margin-bottom:3px}
-.sub-name{font-size:11px;font-weight:500;line-height:1.3;color:var(--color-text-primary)}
+.sub-name{font-size:11px;font-weight:600;line-height:1.3;color:var(--color-text-primary)}
 .sub-hindi{font-size:10px;color:var(--color-text-secondary);margin-top:1px}
+
+/* ── items grid ── */
 .items-section{padding:0 16px 16px}
 .items-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
-.item-card{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);background:var(--color-background-primary);padding:12px 8px;cursor:pointer;text-align:center;transition:border-color .15s}
+.item-card{border:.5px solid var(--color-border-tertiary);
+           border-radius:var(--border-radius-lg);background:#fff;
+           padding:12px 8px;cursor:pointer;text-align:center;transition:border-color .15s}
 .item-card:hover{border-color:var(--color-border-secondary)}
 .item-icon{font-size:32px;display:block;margin-bottom:6px}
-.item-name{font-size:13px;font-weight:500;color:var(--color-text-primary);line-height:1.3}
+.item-name{font-size:13px;font-weight:600;color:var(--color-text-primary);line-height:1.3}
 .item-hindi{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
-.item-bin{font-size:10px;font-weight:500;margin-top:6px;padding:3px 8px;border-radius:20px;display:inline-block}
-.detail-wrap{background:rgba(0,0,0,0.35);min-height:500px;display:flex;align-items:flex-start;justify-content:center;padding:16px;margin-top:0}
-.detail-card{background:var(--color-background-primary);border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);width:100%;max-width:460px;padding:16px}
+.item-bin{font-size:10px;font-weight:600;margin-top:6px;padding:3px 8px;
+          border-radius:20px;display:inline-block}
+
+/* ── detail view ── */
+.detail-wrap{padding:16px;background:#f3f4f6;min-height:400px}
+.detail-card{background:#fff;border-radius:var(--border-radius-lg);
+             border:.5px solid var(--color-border-tertiary);padding:16px}
 .detail-top{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px}
 .detail-icon{font-size:48px;line-height:1}
-.detail-close{margin-left:auto;background:none;border:none;cursor:pointer;color:var(--color-text-tertiary);font-size:20px;flex-shrink:0}
-.detail-name{font-size:18px;font-weight:500;color:var(--color-text-primary)}
+.detail-close{margin-left:auto;background:none;border:1px solid var(--color-border-secondary);
+              border-radius:var(--border-radius-md);cursor:pointer;
+              color:var(--color-text-secondary);font-size:13px;
+              padding:6px 10px;display:flex;align-items:center;gap:4px;flex-shrink:0}
+.detail-close:hover{background:var(--color-background-secondary)}
+.detail-name{font-size:18px;font-weight:600;color:var(--color-text-primary)}
 .detail-hindi{font-size:15px;color:var(--color-text-secondary);margin-top:2px}
-.bin-pill{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:20px;font-size:13px;font-weight:500;margin-bottom:12px}
-.steps-title{font-size:11px;font-weight:500;color:var(--color-text-tertiary);letter-spacing:.05em;margin-bottom:8px}
+.bin-pill{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;
+          border-radius:20px;font-size:13px;font-weight:600;margin-bottom:12px}
+.steps-title{font-size:11px;font-weight:600;color:var(--color-text-tertiary);
+             letter-spacing:.06em;margin-bottom:8px}
 .step-row{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px}
-.step-num{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;flex-shrink:0}
+.step-num{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;
+          justify-content:center;font-size:12px;font-weight:600;flex-shrink:0}
 .step-en{font-size:13px;color:var(--color-text-primary);line-height:1.5}
 .step-hi{font-size:12px;color:var(--color-text-secondary);margin-top:2px;line-height:1.4}
-.warn-row{display:flex;gap:8px;align-items:flex-start;padding:10px;border-radius:var(--border-radius-md);background:#FAECE7;margin-top:8px}
+.warn-row{display:flex;gap:8px;align-items:flex-start;padding:10px;
+          border-radius:var(--border-radius-md);background:#FAECE7;margin-top:8px}
 .warn-icon{font-size:18px;flex-shrink:0}
 .warn-en{font-size:12px;color:#993C1D;line-height:1.5}
 .warn-hi{font-size:11px;color:#993C1D;margin-top:2px}
-.no-res{text-align:center;padding:32px 16px;color:var(--color-text-secondary);font-size:15px}
+.no-res{text-align:center;padding:40px 16px;color:var(--color-text-secondary);font-size:15px}
 </style>
+</head>
+<body>
+<div class="app">
 
-<h2 style="position:absolute;width:1px;height:1px;overflow:hidden">WasteWise household waste disposal guide</h2>
-
+<!-- HEADER -->
 <div class="ww-header">
   <div class="ww-logo">♻</div>
   <div>
-    <div class="ww-title">WasteWise <span style="font-size:14px;font-weight:400;color:var(--color-text-secondary)">/ वेस्टवाइज़</span></div>
-    <div class="ww-sub">Tap a category — or search any item / किसी भी वस्तु को खोजें</div>
+    <div class="ww-title">WasteWise <span style="font-size:14px;font-weight:400;color:#6b7280">/ वेस्टवाइज़</span></div>
+    <div class="ww-sub">श्रेणी चुनें या कोई भी वस्तु खोजें</div>
   </div>
 </div>
 
+<!-- SEARCH -->
 <div class="search-section">
   <div class="search-box">
-    <i class="ti ti-search" aria-hidden="true"></i>
+    <i class="ti ti-search"></i>
     <input id="srch" type="text" placeholder="Search... जैसे battery, onion, दवाई, newspaper" oninput="onSearch()">
-    <button id="srch-clear" onclick="clearSearch()" style="background:none;border:none;cursor:pointer;display:none;padding:0"><i class="ti ti-x" style="font-size:18px;color:var(--color-text-tertiary)" aria-label="Clear"></i></button>
+    <button id="srch-clear" onclick="clearSearch()"
+      style="background:none;border:none;cursor:pointer;display:none;padding:0">
+      <i class="ti ti-x" style="font-size:18px;color:#9ca3af"></i>
+    </button>
   </div>
 </div>
 
+<!-- MAIN VIEW -->
 <div id="main-view">
   <div class="cat-section">
     <div class="cat-label">CHOOSE A CATEGORY / श्रेणी चुनें</div>
@@ -86,20 +173,24 @@
   </div>
 </div>
 
+<!-- SEARCH RESULTS VIEW -->
 <div id="search-view" style="display:none" class="items-section">
   <div class="cat-label">SEARCH RESULTS / खोज परिणाम</div>
   <div class="items-grid" id="searchGrid"></div>
   <div class="no-res" id="searchNone" style="display:none">
-    <i class="ti ti-mood-sad" style="font-size:36px;display:block;margin-bottom:8px" aria-hidden="true"></i>
+    <i class="ti ti-mood-sad" style="font-size:36px;display:block;margin-bottom:8px"></i>
     No results found<br><span style="font-size:13px">कोई परिणाम नहीं मिला</span>
   </div>
 </div>
 
+<!-- DETAIL VIEW -->
 <div id="detailView" style="display:none">
   <div class="detail-wrap">
     <div class="detail-card" id="detailCard"></div>
   </div>
 </div>
+
+</div><!-- /app -->
 
 <script>
 const CATS=[
@@ -268,11 +359,9 @@ const ITEMS={
   ],
 };
 
-let selCat=null, selSub=null, detailItem=null;
+let selCat=null,selSub=null;
 
-function allItems(){
-  return Object.values(ITEMS).flat();
-}
+function allItems(){return Object.values(ITEMS).flat();}
 
 function onSearch(){
   const q=document.getElementById('srch').value.trim().toLowerCase();
@@ -282,8 +371,7 @@ function onSearch(){
   document.getElementById('detailView').style.display='none';
   document.getElementById('search-view').style.display='block';
   const res=allItems().filter(i=>
-    i.name.toLowerCase().includes(q)||
-    i.hindi.includes(q)||
+    i.name.toLowerCase().includes(q)||i.hindi.includes(q)||
     (i.steps||[]).some(s=>s.en.toLowerCase().includes(q)||s.hi.includes(q))
   );
   const sg=document.getElementById('searchGrid');
@@ -361,22 +449,15 @@ function showDetail(src,idx){
     item=(ITEMS[selSub]||[])[idx];
   }
   if(!item)return;
-  detailItem=item;
   const stepsHtml=item.steps.map((s,i)=>`
     <div class="step-row">
       <div class="step-num" style="background:${item.binBg};color:${item.binColor}">${i+1}</div>
-      <div>
-        <div class="step-en">${s.en}</div>
-        <div class="step-hi">${s.hi}</div>
-      </div>
+      <div><div class="step-en">${s.en}</div><div class="step-hi">${s.hi}</div></div>
     </div>`).join('');
   const warnHtml=item.warn?`
     <div class="warn-row">
       <span class="warn-icon">⚠️</span>
-      <div>
-        <div class="warn-en">${item.warn}</div>
-        <div class="warn-hi">${item.warnHi}</div>
-      </div>
+      <div><div class="warn-en">${item.warn}</div><div class="warn-hi">${item.warnHi}</div></div>
     </div>`:'';
   document.getElementById('detailCard').innerHTML=`
     <div class="detail-top">
@@ -385,16 +466,15 @@ function showDetail(src,idx){
         <div class="detail-name">${item.name}</div>
         <div class="detail-hindi">${item.hindi}</div>
       </div>
-      <button class="detail-close" onclick="closeDetail()" aria-label="Back"><i class="ti ti-arrow-left"></i> Back</button>
+      <button class="detail-close" onclick="closeDetail()">← Back</button>
     </div>
     <div>
       <span class="bin-pill" style="background:${item.binBg};color:${item.binColor}">
-        <i class="ti ti-trash" style="font-size:14px" aria-hidden="true"></i> ${item.bin}
+        🗑 ${item.bin}
       </span>
     </div>
     <div class="steps-title">HOW TO DISPOSE / कैसे निपटान करें</div>
-    ${stepsHtml}
-    ${warnHtml}
+    ${stepsHtml}${warnHtml}
   `;
   document.getElementById('main-view').style.display='none';
   document.getElementById('search-view').style.display='none';
@@ -412,10 +492,13 @@ function initCats(){
   document.getElementById('catGrid').innerHTML=CATS.map(c=>`
     <button class="cat-btn" id="cat-${c.id}" onclick="selectCat('${c.id}')">
       <span class="cat-icon">${c.icon}</span>
-      <div class="cat-name" style="color:var(--color-text-primary)">${c.name}</div>
-      <div class="cat-hindi" style="color:var(--color-text-secondary)">${c.hindi}</div>
+      <div class="cat-name">${c.name}</div>
+      <div class="cat-hindi">${c.hindi}</div>
     </button>`).join('');
 }
-
 initCats();
 </script>
+</body>
+</html>"""
+
+components.html(HTML, height=900, scrolling=True)
