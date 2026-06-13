@@ -8,7 +8,6 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-# Remove default Streamlit padding & chrome
 st.markdown("""
 <style>
     #MainMenu, header, footer { visibility: hidden; }
@@ -22,175 +21,170 @@ HTML = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<link rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-     background:#f9fafb;color:#1a1a1a;}
-
-/* ── CSS variables ── */
-:root{
-  --color-text-primary:#1a1a1a;
-  --color-text-secondary:#6b7280;
-  --color-text-tertiary:#9ca3af;
-  --color-background-primary:#ffffff;
-  --color-background-secondary:#f3f4f6;
-  --color-border-tertiary:#e5e7eb;
-  --color-border-secondary:#d1d5db;
-  --border-radius-lg:12px;
-  --border-radius-md:8px;
-}
-
-/* ── wrapper ── */
-.app{max-width:520px;margin:0 auto;background:#fff;
-     min-height:100vh;border-left:1px solid #e5e7eb;border-right:1px solid #e5e7eb;}
-
-/* ── header ── */
-.ww-header{padding:16px 16px 12px;border-bottom:.5px solid var(--color-border-tertiary);
-            display:flex;align-items:center;gap:12px;position:sticky;top:0;
-            background:#fff;z-index:10;}
-.ww-logo{width:48px;height:48px;border-radius:50%;background:#EAF3DE;
-          display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f9fafb;color:#1a1a1a;}
+:root{--color-text-primary:#1a1a1a;--color-text-secondary:#6b7280;--color-text-tertiary:#9ca3af;--color-background-primary:#ffffff;--color-background-secondary:#f3f4f6;--color-border-tertiary:#e5e7eb;--color-border-secondary:#d1d5db;--border-radius-lg:12px;--border-radius-md:8px;}
+.app{max-width:520px;margin:0 auto;background:#fff;min-height:100vh;border-left:1px solid #e5e7eb;border-right:1px solid #e5e7eb;}
+.ww-header{padding:16px 16px 12px;border-bottom:.5px solid var(--color-border-tertiary);display:flex;align-items:center;gap:12px;position:sticky;top:0;background:#fff;z-index:10;}
+.ww-logo{width:48px;height:48px;border-radius:50%;background:#EAF3DE;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
 .ww-title{font-size:20px;font-weight:600;color:var(--color-text-primary);line-height:1.2}
 .ww-sub{font-size:13px;color:var(--color-text-secondary);margin-top:2px}
-
-/* ── search ── */
 .search-section{padding:12px 16px}
-.search-box{display:flex;align-items:center;gap:10px;
-            background:var(--color-background-secondary);
-            border:.5px solid var(--color-border-secondary);
-            border-radius:var(--border-radius-lg);padding:10px 14px}
+.search-box{display:flex;align-items:center;gap:10px;background:var(--color-background-secondary);border:.5px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:10px 14px}
 .search-box i{font-size:20px;color:var(--color-text-tertiary);flex-shrink:0}
-.search-box input{border:none;background:transparent;font-size:16px;
-                  color:var(--color-text-primary);flex:1;outline:none}
+.search-box input{border:none;background:transparent;font-size:16px;color:var(--color-text-primary);flex:1;outline:none}
 .search-box input::placeholder{color:var(--color-text-tertiary)}
-
-/* ── category grid ── */
 .cat-section{padding:0 16px 12px}
-.cat-label{font-size:11px;color:var(--color-text-tertiary);font-weight:600;
-           letter-spacing:.06em;margin-bottom:8px}
+.cat-label{font-size:11px;color:var(--color-text-tertiary);font-weight:600;letter-spacing:.06em;margin-bottom:8px}
 .cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.cat-btn{border:.5px solid var(--color-border-tertiary);
-         border-radius:var(--border-radius-lg);background:#fff;
-         padding:10px 6px;cursor:pointer;text-align:center;transition:all .15s}
+.cat-btn{border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);background:#fff;padding:10px 6px;cursor:pointer;text-align:center;transition:all .15s}
 .cat-btn.active{border-width:2px}
 .cat-icon{font-size:26px;display:block;margin-bottom:4px}
 .cat-name{font-size:12px;font-weight:600;line-height:1.3;color:var(--color-text-primary)}
 .cat-hindi{font-size:11px;color:var(--color-text-secondary);margin-top:1px}
-
-/* ── sub grid ── */
 .sub-section{padding:0 16px 12px}
 .sub-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:8px}
-.sub-btn{border:.5px solid var(--color-border-tertiary);
-         border-radius:var(--border-radius-md);background:#fff;
-         padding:8px 4px;cursor:pointer;text-align:center;transition:all .15s}
+.sub-btn{border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);background:#fff;padding:8px 4px;cursor:pointer;text-align:center;transition:all .15s}
 .sub-btn.active{border-width:2px}
 .sub-icon{font-size:22px;display:block;margin-bottom:3px}
 .sub-name{font-size:11px;font-weight:600;line-height:1.3;color:var(--color-text-primary)}
 .sub-hindi{font-size:10px;color:var(--color-text-secondary);margin-top:1px}
-
-/* ── items grid ── */
 .items-section{padding:0 16px 16px}
 .items-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
-.item-card{border:.5px solid var(--color-border-tertiary);
-           border-radius:var(--border-radius-lg);background:#fff;
-           padding:12px 8px;cursor:pointer;text-align:center;transition:border-color .15s}
+.item-card{border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);background:#fff;padding:12px 8px;cursor:pointer;text-align:center;transition:border-color .15s}
 .item-card:hover{border-color:var(--color-border-secondary)}
 .item-icon{font-size:32px;display:block;margin-bottom:6px}
 .item-name{font-size:13px;font-weight:600;color:var(--color-text-primary);line-height:1.3}
 .item-hindi{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
-.item-bin{font-size:10px;font-weight:600;margin-top:6px;padding:3px 8px;
-          border-radius:20px;display:inline-block}
-
-/* ── detail view ── */
+.item-bin{font-size:10px;font-weight:600;margin-top:6px;padding:3px 8px;border-radius:20px;display:inline-block}
 .detail-wrap{padding:16px;background:#f3f4f6;min-height:400px}
-.detail-card{background:#fff;border-radius:var(--border-radius-lg);
-             border:.5px solid var(--color-border-tertiary);padding:16px}
+.detail-card{background:#fff;border-radius:var(--border-radius-lg);border:.5px solid var(--color-border-tertiary);padding:16px}
 .detail-top{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px}
 .detail-icon{font-size:48px;line-height:1}
-.detail-close{margin-left:auto;background:none;border:1px solid var(--color-border-secondary);
-              border-radius:var(--border-radius-md);cursor:pointer;
-              color:var(--color-text-secondary);font-size:13px;
-              padding:6px 10px;display:flex;align-items:center;gap:4px;flex-shrink:0}
+.detail-close{margin-left:auto;background:none;border:1px solid var(--color-border-secondary);border-radius:var(--border-radius-md);cursor:pointer;color:var(--color-text-secondary);font-size:13px;padding:6px 10px;display:flex;align-items:center;gap:4px;flex-shrink:0}
 .detail-close:hover{background:var(--color-background-secondary)}
 .detail-name{font-size:18px;font-weight:600;color:var(--color-text-primary)}
 .detail-hindi{font-size:15px;color:var(--color-text-secondary);margin-top:2px}
-.bin-pill{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;
-          border-radius:20px;font-size:13px;font-weight:600;margin-bottom:12px}
-.steps-title{font-size:11px;font-weight:600;color:var(--color-text-tertiary);
-             letter-spacing:.06em;margin-bottom:8px}
+.bin-pill{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:20px;font-size:13px;font-weight:600;margin-bottom:12px}
+.steps-title{font-size:11px;font-weight:600;color:var(--color-text-tertiary);letter-spacing:.06em;margin-bottom:8px}
 .step-row{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px}
-.step-num{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;
-          justify-content:center;font-size:12px;font-weight:600;flex-shrink:0}
+.step-num{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0}
 .step-en{font-size:13px;color:var(--color-text-primary);line-height:1.5}
 .step-hi{font-size:12px;color:var(--color-text-secondary);margin-top:2px;line-height:1.4}
-.warn-row{display:flex;gap:8px;align-items:flex-start;padding:10px;
-          border-radius:var(--border-radius-md);background:#FAECE7;margin-top:8px}
+.warn-row{display:flex;gap:8px;align-items:flex-start;padding:10px;border-radius:var(--border-radius-md);background:#FAECE7;margin-top:8px}
 .warn-icon{font-size:18px;flex-shrink:0}
 .warn-en{font-size:12px;color:#993C1D;line-height:1.5}
 .warn-hi{font-size:11px;color:#993C1D;margin-top:2px}
 .no-res{text-align:center;padding:40px 16px;color:var(--color-text-secondary);font-size:15px}
+.ai-tab-bar{display:flex;gap:0;border-bottom:.5px solid var(--color-border-tertiary);padding:0 16px;position:sticky;top:80px;background:#fff;z-index:9;}
+.ai-tab{flex:1;padding:10px 0;font-size:13px;font-weight:600;color:var(--color-text-secondary);border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s}
+.ai-tab.active{color:#3B6D11;border-bottom-color:#3B6D11}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+.ai-chat-wrap{display:flex;flex-direction:column;height:520px;}
+.ai-messages{flex:1;overflow-y:auto;padding:12px 16px;display:flex;flex-direction:column;gap:10px;}
+.msg{max-width:85%;padding:10px 13px;border-radius:var(--border-radius-lg);font-size:13px;line-height:1.6}
+.msg.user{align-self:flex-end;background:#EAF3DE;color:#27500A;border-bottom-right-radius:4px}
+.msg.bot{align-self:flex-start;background:var(--color-background-secondary);color:var(--color-text-primary);border-bottom-left-radius:4px}
+.msg.bot .msg-label{font-size:10px;font-weight:600;color:#3B6D11;letter-spacing:.05em;margin-bottom:4px}
+.typing{display:flex;gap:4px;align-items:center;padding:4px 0}
+.typing span{width:6px;height:6px;border-radius:50%;background:#9ca3af;animation:blink 1.2s infinite}
+.typing span:nth-child(2){animation-delay:.2s}
+.typing span:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,80%,100%{opacity:.3}40%{opacity:1}}
+.ai-input-bar{padding:10px 16px;border-top:.5px solid var(--color-border-tertiary);display:flex;gap:8px;align-items:center;}
+.ai-input-bar input{flex:1;border:.5px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:9px 13px;font-size:14px;outline:none;background:var(--color-background-secondary);color:var(--color-text-primary);}
+.ai-input-bar input:focus{border-color:#3B6D11;background:#fff}
+.ai-send-btn{width:38px;height:38px;border-radius:50%;background:#3B6D11;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:opacity .15s}
+.ai-send-btn:disabled{opacity:.4;cursor:not-allowed}
+.ai-send-btn i{color:#fff;font-size:18px}
+.quick-chips{display:flex;flex-wrap:wrap;gap:6px;padding:8px 16px 4px}
+.chip{font-size:11px;padding:5px 11px;border-radius:20px;border:.5px solid var(--color-border-secondary);background:#fff;cursor:pointer;color:var(--color-text-secondary);transition:all .15s}
+.chip:hover{background:#EAF3DE;color:#27500A;border-color:#3B6D11}
 </style>
 </head>
 <body>
 <div class="app">
 
-<!-- HEADER -->
 <div class="ww-header">
   <div class="ww-logo">♻</div>
   <div>
     <div class="ww-title">WasteWise <span style="font-size:14px;font-weight:400;color:#6b7280">/ वेस्टवाइज़</span></div>
-    <div class="ww-sub">श्रेणी चुनें या कोई भी वस्तु खोजें</div>
+    <div class="ww-sub">श्रेणी चुनें या AI से पूछें</div>
   </div>
 </div>
 
-<!-- SEARCH -->
-<div class="search-section">
-  <div class="search-box">
-    <i class="ti ti-search"></i>
-    <input id="srch" type="text" placeholder="Search... जैसे battery, onion, दवाई, newspaper" oninput="onSearch()">
-    <button id="srch-clear" onclick="clearSearch()"
-      style="background:none;border:none;cursor:pointer;display:none;padding:0">
-      <i class="ti ti-x" style="font-size:18px;color:#9ca3af"></i>
-    </button>
+<div class="ai-tab-bar">
+  <button class="ai-tab active" onclick="switchTab('browse')">🗂 Browse / ब्राउज़</button>
+  <button class="ai-tab" onclick="switchTab('ai')">✨ Ask AI / AI से पूछें</button>
+</div>
+
+<div id="tab-browse" class="tab-panel active">
+  <div class="search-section">
+    <div class="search-box">
+      <i class="ti ti-search"></i>
+      <input id="srch" type="text" placeholder="Search… jaise battery, onion, दवाई, newspaper" oninput="onSearch()">
+      <button id="srch-clear" onclick="clearSearch()" style="background:none;border:none;cursor:pointer;display:none;padding:0">
+        <i class="ti ti-x" style="font-size:18px;color:#9ca3af"></i>
+      </button>
+    </div>
+  </div>
+  <div id="main-view">
+    <div class="cat-section">
+      <div class="cat-label">CHOOSE A CATEGORY / श्रेणी चुनें</div>
+      <div class="cat-grid" id="catGrid"></div>
+    </div>
+    <div id="subSection" style="display:none" class="sub-section">
+      <div class="cat-label" id="subLabel">SELECT TYPE / प्रकार चुनें</div>
+      <div class="sub-grid" id="subGrid"></div>
+    </div>
+    <div id="itemsSection" style="display:none" class="items-section">
+      <div class="cat-label" id="itemsLabel">TAP AN ITEM / वस्तु चुनें</div>
+      <div class="items-grid" id="itemsGrid"></div>
+    </div>
+  </div>
+  <div id="search-view" style="display:none" class="items-section">
+    <div class="cat-label">SEARCH RESULTS / खोज परिणाम</div>
+    <div class="items-grid" id="searchGrid"></div>
+    <div class="no-res" id="searchNone" style="display:none">
+      <i class="ti ti-mood-sad" style="font-size:36px;display:block;margin-bottom:8px"></i>
+      No results found<br><span style="font-size:13px">कोई परिणाम नहीं मिला</span>
+    </div>
+  </div>
+  <div id="detailView" style="display:none">
+    <div class="detail-wrap">
+      <div class="detail-card" id="detailCard"></div>
+    </div>
   </div>
 </div>
 
-<!-- MAIN VIEW -->
-<div id="main-view">
-  <div class="cat-section">
-    <div class="cat-label">CHOOSE A CATEGORY / श्रेणी चुनें</div>
-    <div class="cat-grid" id="catGrid"></div>
-  </div>
-  <div id="subSection" style="display:none" class="sub-section">
-    <div class="cat-label" id="subLabel">SELECT TYPE / प्रकार चुनें</div>
-    <div class="sub-grid" id="subGrid"></div>
-  </div>
-  <div id="itemsSection" style="display:none" class="items-section">
-    <div class="cat-label" id="itemsLabel">TAP AN ITEM / वस्तु चुनें</div>
-    <div class="items-grid" id="itemsGrid"></div>
-  </div>
-</div>
-
-<!-- SEARCH RESULTS VIEW -->
-<div id="search-view" style="display:none" class="items-section">
-  <div class="cat-label">SEARCH RESULTS / खोज परिणाम</div>
-  <div class="items-grid" id="searchGrid"></div>
-  <div class="no-res" id="searchNone" style="display:none">
-    <i class="ti ti-mood-sad" style="font-size:36px;display:block;margin-bottom:8px"></i>
-    No results found<br><span style="font-size:13px">कोई परिणाम नहीं मिला</span>
+<div id="tab-ai" class="tab-panel">
+  <div class="ai-chat-wrap">
+    <div class="ai-messages" id="aiMessages">
+      <div class="msg bot">
+        <div class="msg-label">WASTEWISE AI</div>
+        नमस्ते! 👋 I'm your waste disposal assistant. Ask me anything about recycling, disposal, or waste management in India — in English or Hindi!
+      </div>
+    </div>
+    <div class="quick-chips" id="quickChips">
+      <span class="chip" onclick="askChip('How do I dispose of old medicines safely?')">💊 Old medicines</span>
+      <span class="chip" onclick="askChip('Where to drop e-waste in India?')">💻 E-waste drop</span>
+      <span class="chip" onclick="askChip('Can I compost onion peels at home?')">🧅 Composting</span>
+      <span class="chip" onclick="askChip('What is the green bin for?')">🟢 Green bin</span>
+      <span class="chip" onclick="askChip('How to dispose used cooking oil?')">🍳 Cooking oil</span>
+    </div>
+    <div class="ai-input-bar">
+      <input id="aiInput" type="text" placeholder="Ask about any waste item… कुछ भी पूछें" onkeydown="if(event.key==='Enter')sendAI()"/>
+      <button class="ai-send-btn" id="aiSendBtn" onclick="sendAI()">
+        <i class="ti ti-send"></i>
+      </button>
+    </div>
   </div>
 </div>
 
-<!-- DETAIL VIEW -->
-<div id="detailView" style="display:none">
-  <div class="detail-wrap">
-    <div class="detail-card" id="detailCard"></div>
-  </div>
 </div>
-
-</div><!-- /app -->
 
 <script>
 const CATS=[
@@ -363,6 +357,12 @@ let selCat=null,selSub=null;
 
 function allItems(){return Object.values(ITEMS).flat();}
 
+function switchTab(t){
+  document.querySelectorAll('.ai-tab').forEach((b,i)=>b.classList.toggle('active',['browse','ai'][i]===t));
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('tab-'+t).classList.add('active');
+}
+
 function onSearch(){
   const q=document.getElementById('srch').value.trim().toLowerCase();
   document.getElementById('srch-clear').style.display=q?'block':'none';
@@ -497,6 +497,82 @@ function initCats(){
     </button>`).join('');
 }
 initCats();
+
+const API_KEY='AQ.Ab8RN6Kzu26aCGP071hb8jeGmHQBdxNDH72qhCj8iTxiT72F2g';
+let chatHistory=[];
+let isLoading=false;
+
+function appendMsg(role,text){
+  const el=document.createElement('div');
+  el.className='msg '+(role==='user'?'user':'bot');
+  if(role==='assistant'){
+    el.innerHTML=`<div class="msg-label">WASTEWISE AI</div>${text.replace(/\n/g,'<br>')}`;
+  } else {
+    el.textContent=text;
+  }
+  document.getElementById('aiMessages').appendChild(el);
+  document.getElementById('aiMessages').scrollTop=999999;
+  return el;
+}
+
+function appendTyping(){
+  const el=document.createElement('div');
+  el.className='msg bot';
+  el.id='typing-indicator';
+  el.innerHTML='<div class="msg-label">WASTEWISE AI</div><div class="typing"><span></span><span></span><span></span></div>';
+  document.getElementById('aiMessages').appendChild(el);
+  document.getElementById('aiMessages').scrollTop=999999;
+}
+
+function removeTyping(){
+  const t=document.getElementById('typing-indicator');
+  if(t)t.remove();
+}
+
+function askChip(q){
+  document.getElementById('quickChips').style.display='none';
+  sendAI(q);
+}
+
+async function sendAI(overrideText){
+  if(isLoading)return;
+  const inp=document.getElementById('aiInput');
+  const text=(overrideText||inp.value).trim();
+  if(!text)return;
+  inp.value='';
+  isLoading=true;
+  document.getElementById('aiSendBtn').disabled=true;
+  appendMsg('user',text);
+  chatHistory.push({role:'user',content:text});
+  appendTyping();
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'x-api-key':API_KEY,
+        'anthropic-version':'2023-06-01'
+      },
+      body:JSON.stringify({
+        model:'claude-sonnet-4-6',
+        max_tokens:1000,
+        system:`You are WasteWise AI, a friendly waste disposal assistant for India. You help people understand how to properly dispose of, recycle, or donate household waste items. You are knowledgeable about Indian municipal waste systems (green bin = wet/organic waste, blue bin = dry/recyclable, red bin = hazardous/biomedical), e-waste rules in India, kabadiwala system, NGOs like Goonj, and Swachh Bharat guidelines. Reply in the same language the user writes in (Hindi or English). Keep answers concise, practical, and friendly. Use simple bullet points where helpful. Always prioritize safety and environment.`,
+        messages:chatHistory
+      })
+    });
+    const data=await res.json();
+    removeTyping();
+    const reply=data.content?.[0]?.text||'Sorry, I could not get a response. Please try again.';
+    chatHistory.push({role:'assistant',content:reply});
+    appendMsg('assistant',reply);
+  } catch(e){
+    removeTyping();
+    appendMsg('assistant','⚠️ Network error. Please check your connection and try again.');
+  }
+  isLoading=false;
+  document.getElementById('aiSendBtn').disabled=false;
+  document.getElementById('aiInput').focus();
+}
 </script>
 </body>
 </html>"""
